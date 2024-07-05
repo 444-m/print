@@ -1,3 +1,5 @@
 for _,Player in pairs(game:GetService("Players"):GetDescendants()) do
-   print(Player.Name.."'s Bounty is " Player.leaderstats["Bounty/Honor"].Value)
+   if Player:IsA("Player") then
+      print(Player.Name.."'s Bounty is " Player.leaderstats["Bounty/Honor"].Value)
+   end
 end
