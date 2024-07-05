@@ -1,1 +1,36 @@
-print("Hello World")
+local uis = game:GetService("UserInputService")
+local last_Time = tick()
+local run = false
+--local anim = Instance.new("Animation")
+--anim.AnimationId = script.Animation.AnimationId
+--local track = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):LoadAnimation(anim)
+
+uis.InputBegan:Connect(function(i, g)
+    if g then return end
+    if i.KeyCode == Enum.KeyCode.LeftControl then
+        local now = tick()
+
+        local dif = (now - last_Time)
+        if dif <= 0.5 then
+            run = true
+            
+            
+            
+           -- track:Play()
+            game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"), TweenInfo.new(1), {["WalkSpeed"]=25}):Play()
+            game:GetService("TweenService"):Create(workspace.CurrentCamera, TweenInfo.new(1), {["FieldOfView"]=85}):Play()
+            
+        end
+        uis.InputEnded:Connect(function(i, g)
+            if g then return end
+            if i.KeyCode == Enum.KeyCode.LeftControl then
+                run = false
+                game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid").WalkSpeed = 16
+                --track:Stop()
+                game:GetService("TweenService"):Create(workspace.CurrentCamera, TweenInfo.new(0.3), {["FieldOfView"]=70}):Play()
+            end
+            
+        end)
+        last_Time = tick()
+    end
+end)
